@@ -18,6 +18,8 @@
         <version.javaee>8.0</version.javaee>
         <version.primefaces>8.0</version.primefaces>
         <version.eclipselink>2.7.6</version.eclipselink>
+        
+        <maven-war-plugin-version>3.2.3</maven-war-plugin>
     </properties>
     
     <dependencies>
@@ -74,7 +76,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>${maven-war-plugin-version}</version>
             </plugin>
         </plugins>
     </build>
