@@ -19,7 +19,7 @@
         <version.primefaces>8.0</version.primefaces>
         <version.eclipselink>2.7.6</version.eclipselink>
         
-        <maven-war-plugin-version>3.2.3</maven-war-plugin>
+        <maven-war-plugin-version>3.2.3</maven-war-plugin-version>
     </properties>
     
     <dependencies>
