@@ -24,12 +24,6 @@ public class CustomerController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Clef contenant l'entité en cours de manipulation dans le vue. Utilisé
-     * avec le <i>FlashScope</i> de <i>JSF</i>.
-     */
-    public static final String FORM = "form.customer";
-
-    /**
      * Gestionnaire d'entité.
      */
     @Inject
