@@ -47,7 +47,18 @@ public class EmailExistValidator implements Validator<String> {
         }
     }
 
+    /**
+     * Vérifier l'existance de l'adresse de courriel dans la persistance.
+     *
+     * @param email Adresse de courriel
+     * @return La valeur <code>true</code> si cette adresse est déjà utilisée,
+     * sinon la valeur <code>false est retournée
+     */
     private boolean exists(final String email) {
+        // Ici la classe n'est pas dans un contexte
+        // d'injection de dépendance.
+        // Il faut donc récupérer le gestionnaire d'entité
+        // ce cette manière.
         var em = CDI.current().select(EntityManager.class).get();
         var cb = em.getCriteriaBuilder();
         var query = cb.createQuery(Long.class);
