@@ -18,7 +18,17 @@
         <version.javaee>8.0</version.javaee>
         <version.primefaces>8.0</version.primefaces>
         <version.eclipselink>2.7.6</version.eclipselink>
-        <maven-war-plugin-version>3.2.3</maven-war-plugin-version>
+        
+        <!-- Version des extensions -->
+        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+        <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
+        
+        <version.maven-install-plugin>2.5.2</version.maven-install-plugin>
+        <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
+        <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
+        <version.maven-site-plugin>3.9.0</version.maven-site-plugin>
+        <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
+        <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
     </properties>
     
     <dependencies>
@@ -51,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${version.maven-compiler-plugin}</version>
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>
@@ -75,8 +85,45 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-war-plugin-version}</version>
+                <version>${version.maven-war-plugin}</version>
             </plugin>
+            
+            <!-- 
+                Autres extensions par défaut. 
+                Voir: 
+                mvn dependency:resolve-plugins
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>${version.maven-install-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${version.maven-deploy-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven-surefire-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${version.maven-site-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${version.maven-clean-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${version.maven-resources-plugin}</version>
+            </plugin>
+
         </plugins>
     </build>
 </project>
