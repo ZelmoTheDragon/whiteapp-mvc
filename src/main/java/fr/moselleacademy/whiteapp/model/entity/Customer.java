@@ -1,7 +1,9 @@
-package fr.moselleacademy.mvc.model.entity;
+package fr.moselleacademy.whiteapp.model.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.spi.CDI;
@@ -23,7 +25,7 @@ import javax.validation.constraints.Size;
 @Dependent
 @Entity
 @Table(name = "customer")
-public class Customer extends AbstractModel {
+public class Customer extends Model {
 
     /**
      * Numéro de série.
@@ -95,6 +97,22 @@ public class Customer extends AbstractModel {
                 .get();
     }
 
+    /**
+     * Construire une instance factice vide. Ne doit jamais être persistée.
+     *
+     * @return Une instance factice vide.
+     */
+    private static Customer ofEmpty() {
+        var entity = Customer.of();
+        entity.setId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+        entity.setVersion(0L);
+        entity.setGivenName("");
+        entity.setFamilyName("");
+        entity.setEmail("");
+        entity.setBirthDate(LocalDate.parse("0000-01-01"));
+        return entity;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -122,6 +140,64 @@ public class Customer extends AbstractModel {
                 id,
                 version
         );
+    }
+
+    // ------------------------
+    // Lecture
+    // ------------------------
+    /**
+     * Obtenir le nombre d'occurence enregistré.
+     *
+     * @return Le nombre d'occurence
+     */
+    public static long size() {
+        var empty = Customer.ofEmpty();
+        return empty.count();
+    }
+
+    /**
+     * Indiquer si aucune occurence existe.
+     *
+     * @return La valeur <code>true</code> si aucune occurence existe, sinon la
+     * valeur <code>false</code> est retournée
+     */
+    public static boolean isEmpty() {
+        var empty = Customer.ofEmpty();
+        return empty.count() == 0;
+    }
+
+    /**
+     * Chercher toutes les entités enregistrés.
+     *
+     * @return Une liste des entités persistées
+     */
+    public static List<Customer> find() {
+        var empty = Customer.ofEmpty();
+        return empty.select();
+    }
+
+    /**
+     * Rechercher une entité en fonction de la clef primaire.
+     *
+     * @param id Clef primaire
+     * @return Une option contenant ou non l'entité correspondante à la clef
+     * primaire
+     */
+    public static Optional<Customer> find(final UUID id) {
+        var empty = Customer.ofEmpty();
+        return empty.selectWhere(id);
+    }
+
+    /**
+     * Vérifier l'existance de l'adresse de courriel dans la persistance.
+     *
+     * @param email Adresse de courriel
+     * @return La valeur <code>true</code> si cette adresse est déjà utilisée,
+     * sinon la valeur <code>false est retournée
+     */
+    public static boolean emailExists(final String email) {
+        var empty = Customer.ofEmpty();
+        return empty.countWhere(Customer_.email, email) == 1L;
     }
 
     // ------------------------

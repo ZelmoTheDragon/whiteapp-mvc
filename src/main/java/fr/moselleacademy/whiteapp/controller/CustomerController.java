@@ -1,12 +1,11 @@
-package fr.moselleacademy.mvc.controller;
+package fr.moselleacademy.whiteapp.controller;
 
-import fr.moselleacademy.mvc.model.entity.Customer;
+import fr.moselleacademy.whiteapp.model.entity.Customer;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 /**
@@ -22,12 +21,6 @@ public class CustomerController implements Serializable {
      * Numéro de série.
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Gestionnaire d'entité.
-     */
-    @Inject
-    private transient EntityManager em;
 
     /**
      * Entité en cours de manipulation. Cette entité doit avoir le même cycle de
@@ -82,15 +75,7 @@ public class CustomerController implements Serializable {
      * @return La liste des entité
      */
     public List<Customer> find() {
-        var cb = em.getCriteriaBuilder();
-        var query = cb.createQuery(Customer.class);
-        var root = query.from(Customer.class);
-        query.select(root);
-        // /!\ ATTENTION: 
-        // Peut surcharger la mémoire en fonction du nombre de tuple remonté
-        return em
-                .createQuery(query)
-                .getResultList();
+        return Customer.find();
     }
 
     // ------------------------

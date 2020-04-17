@@ -1,4 +1,4 @@
-package fr.moselleacademy.mvc.model;
+package fr.moselleacademy.whiteapp.model;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
@@ -45,6 +45,7 @@ public class ContextResource {
      */
     public void clearEntityManager(@Disposes final EntityManager em) {
         em.clear();
+        em.close();
     }
 
 }

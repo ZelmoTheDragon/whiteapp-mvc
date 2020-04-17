@@ -71,7 +71,11 @@
                 <h:outputText value="#{m['customer.table']}" />
             </legend>
             <h:form>
-                <h:dataTable value="#{customerController.find()}" var="e">
+                <h:dataTable 
+                    headerClass="table-head"
+                    rowClasses="table-row"
+                    value="#{customerController.find()}" 
+                    var="e" >
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="#{m['customer.givenName']}" />
@@ -89,6 +93,14 @@
                             <h:outputText value="#{m['customer.email']}" />
                         </f:facet>
                         <h:outputText value="#{e.email}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{m['customer.birthDate']}" />
+                        </f:facet>
+                        <h:outputText value="#{e.birthDate}"  >
+                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                        </h:outputText>
                     </h:column>
 
                     <h:column>

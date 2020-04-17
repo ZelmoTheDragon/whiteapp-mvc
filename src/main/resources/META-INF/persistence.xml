@@ -13,8 +13,8 @@
         de cette technologie.
     -->
     
-    <persistence-unit name="mvc-pu" transaction-type="JTA">
-        <jta-data-source>jdbc/MVC</jta-data-source>
+    <persistence-unit name="whiteapp-pu" transaction-type="JTA">
+        <jta-data-source>java:app/jdbc/WhiteApp</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <validation-mode>CALLBACK</validation-mode>

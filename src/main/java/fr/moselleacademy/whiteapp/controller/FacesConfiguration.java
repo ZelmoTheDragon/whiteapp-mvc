@@ -1,4 +1,4 @@
-package fr.moselleacademy.mvc.controller;
+package fr.moselleacademy.whiteapp.controller;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.annotation.FacesConfig;
