@@ -1,4 +1,4 @@
-package fr.moselleacademy.mvc.model.entity;
+package fr.moselleacademy.whiteapp.model.entity;
 
 import java.io.Serializable;
 import java.util.List;

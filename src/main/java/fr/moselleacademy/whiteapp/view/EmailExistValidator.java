@@ -1,6 +1,6 @@
-package fr.moselleacademy.mvc.view;
+package fr.moselleacademy.whiteapp.view;
 
-import fr.moselleacademy.mvc.model.entity.Customer;
+import fr.moselleacademy.whiteapp.model.entity.Customer;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

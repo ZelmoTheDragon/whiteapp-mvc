@@ -1,4 +1,4 @@
-package fr.moselleacademy.mvc.view;
+package fr.moselleacademy.whiteapp.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

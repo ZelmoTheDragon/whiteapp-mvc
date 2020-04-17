@@ -1,4 +1,4 @@
-package fr.moselleacademy.mvc.model;
+package fr.moselleacademy.whiteapp.model;
 
 import java.util.Objects;
 import java.util.UUID;

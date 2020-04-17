@@ -1,4 +1,4 @@
-package fr.moselleacademy.mvc.model.entity;
+package fr.moselleacademy.whiteapp.model.entity;
 
 import java.time.LocalDate;
 import java.util.List;
