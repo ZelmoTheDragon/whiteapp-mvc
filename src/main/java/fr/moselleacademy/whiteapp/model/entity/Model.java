@@ -78,6 +78,105 @@ public abstract class Model implements Serializable {
     }
 
     /**
+     * Obtenir le nombre d'occurence enregistré.
+     *
+     * @return Le nombre d'occurence
+     */
+    protected long count() {
+        // Méthode de lecture
+        // Rendre accèssible de manière statique
+        var em = getEntityManager();
+        var cb = em.getCriteriaBuilder();
+        var q = cb.createQuery(Long.class);
+        var root = q.from(getClass());
+        q.select(cb.count(root));
+        return em
+                .createQuery(q)
+                .getSingleResult();
+    }
+
+    /**
+     * Obtenir le nombre d'occurence enregistré.
+     *
+     * @param column Colonne du méta modèle
+     * @param value Valeur
+     * @return Le nombre d'occurence
+     */
+    protected long countWhere(final SingularAttribute<?, ?> column, final Object value) {
+        // Méthode de lecture
+        // Rendre accèssible de manière statique
+        var em = getEntityManager();
+        var cb = em.getCriteriaBuilder();
+        var q = cb.createQuery(Long.class);
+        var root = q.from(getClass());
+        q.select(cb.count(root));
+        var p = cb.equal(root.get(column.getName()), value);
+        q.where(p);
+        return em
+                .createQuery(q)
+                .getSingleResult();
+    }
+
+    /**
+     * Chercher toutes les entités enregistrés.
+     *
+     * @param <E> Type de l'entité
+     * @return Une liste des entités persistées
+     */
+    protected <E extends Model> List<E> select() {
+        // Méthode de lecture
+        // Rendre accèssible de manière statique
+        var em = getEntityManager();
+        var cb = em.getCriteriaBuilder();
+        var q = cb.createQuery(getClass());
+        q.from(getClass());
+        // /!\ ATTENTION: 
+        // Peut surcharger la mémoire en fonction du nombre de tuple remonté
+        return (List<E>) em
+                .createQuery(q)
+                .getResultList();
+    }
+
+    /**
+     * Rechercher une entité en fonction de la clef primaire.
+     *
+     * @param <E> Type de l'entité
+     * @param id Clef primaire
+     * @return Une option contenant ou non l'entité correspondante à la clef
+     * primaire
+     */
+    protected <E extends Model> Optional<E> selectWhere(final Object id) {
+        // Méthode de lecture
+        // Rendre accèssible de manière statique
+        // Lecture dans le cache de persistance
+        var em = getEntityManager();
+        var entity = (E) em.find(getClass(), id);
+        return Optional.ofNullable(entity);
+    }
+
+    /**
+     * Rechercher une entité en fonction d'un critère de recherche.
+     *
+     * @param <E> Type de l'entité
+     * @param column Colonne du méta modèle
+     * @param value Valeur
+     * @return Une liste des entités persistées
+     */
+    protected <E extends Model> List<E> selectWhere(final SingularAttribute<?, ?> column, final Object value) {
+        // Méthode de lecture
+        // Rendre accèssible de manière statique
+        var em = getEntityManager();
+        var cb = em.getCriteriaBuilder();
+        var q = cb.createQuery(getClass());
+        var root = q.from(getClass());
+        var p = cb.equal(root.get(column.getName()), value);
+        q.where(p);
+        return (List<E>) em
+                .createQuery(q)
+                .getSingleResult();
+    }
+
+    /**
      * Obtenir une instance du gestinnaire d'entité.
      *
      * @return Une instance du gestionnaire d'entité
@@ -116,105 +215,6 @@ public abstract class Model implements Serializable {
                 .getMetamodel()
                 .entity(getClass())
                 .getId(pkClass);
-    }
-
-    /**
-     * Obtenir le nombre d'occurence enregistré.
-     *
-     * @return Le nombre d'occurence
-     */
-    public long count() {
-        // Méthode de lecture
-        // Rendre accèssible de manière statique
-        var em = getEntityManager();
-        var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(Long.class);
-        var root = q.from(getClass());
-        q.select(cb.count(root));
-        return em
-                .createQuery(q)
-                .getSingleResult();
-    }
-
-    /**
-     * Obtenir le nombre d'occurence enregistré.
-     *
-     * @param column Colonne du méta modèle
-     * @param value Valeur
-     * @return Le nombre d'occurence
-     */
-    public long countWhere(final SingularAttribute<?, ?> column, final Object value) {
-        // Méthode de lecture
-        // Rendre accèssible de manière statique
-        var em = getEntityManager();
-        var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(Long.class);
-        var root = q.from(getClass());
-        q.select(cb.count(root));
-        var p = cb.equal(root.get(column.getName()), value);
-        q.where(p);
-        return em
-                .createQuery(q)
-                .getSingleResult();
-    }
-
-    /**
-     * Chercher toutes les entités enregistrés.
-     *
-     * @param <E> Type de l'entité
-     * @return Une liste des entités persistées
-     */
-    public <E extends Model> List<E> select() {
-        // Méthode de lecture
-        // Rendre accèssible de manière statique
-        var em = getEntityManager();
-        var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(getClass());
-        q.from(getClass());
-        // /!\ ATTENTION: 
-        // Peut surcharger la mémoire en fonction du nombre de tuple remonté
-        return (List<E>) em
-                .createQuery(q)
-                .getResultList();
-    }
-
-    /**
-     * Rechercher une entité en fonction de la clef primaire.
-     *
-     * @param <E> Type de l'entité
-     * @param id Clef primaire
-     * @return Une option contenant ou non l'entité correspondante à la clef
-     * primaire
-     */
-    public <E extends Model> Optional<E> selectWhere(final Object id) {
-        // Méthode de lecture
-        // Rendre accèssible de manière statique
-        // Lecture dans le cache de persistance
-        var em = getEntityManager();
-        var entity = (E) em.find(getClass(), id);
-        return Optional.ofNullable(entity);
-    }
-
-    /**
-     * Rechercher une entité en fonction d'un critère de recherche.
-     *
-     * @param <E> Type de l'entité
-     * @param column Colonne du méta modèle
-     * @param value Valeur
-     * @return Une liste des entités persistées
-     */
-    public <E extends Model> List<E> selectWhere(final SingularAttribute<?, ?> column, final Object value) {
-        // Méthode de lecture
-        // Rendre accèssible de manière statique
-        var em = getEntityManager();
-        var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(getClass());
-        var root = q.from(getClass());
-        var p = cb.equal(root.get(column.getName()), value);
-        q.where(p);
-        return (List<E>) em
-                .createQuery(q)
-                .getSingleResult();
     }
 
 }
