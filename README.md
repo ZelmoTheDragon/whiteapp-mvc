@@ -26,3 +26,8 @@ Récupération du projet:
     git clone https://github.com/ZelmoTheDragon/whiteapp-mvc.git
     mvn install
 ~~~
+
+Exécution du projet:
+~~~
+    mvn payara-micro:start
+~~~

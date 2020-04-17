@@ -19,10 +19,13 @@
         <version.primefaces>8.0</version.primefaces>
         <version.eclipselink>2.7.6</version.eclipselink>
         
+        <!-- Serveur embarqué -->
+        <version.payara-micro-maven-plugin>1.0.7</version.payara-micro-maven-plugin>
+        <version.payara>5.201</version.payara>
+        
         <!-- Version des extensions -->
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
         <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
-        
         <version.maven-install-plugin>2.5.2</version.maven-install-plugin>
         <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
@@ -58,6 +61,35 @@
         </resources>
         
         <plugins>
+            <!-- 
+                Serveur embarqué Payara Micro 
+                Commande pour démarrer le serveur:
+                mvn payara-micro:start
+            -->
+            <plugin>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-micro-maven-plugin</artifactId>
+                <version>${version.payara-micro-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>bundle</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <payaraVersion>${version.payara}</payaraVersion>
+                    <uberJarClassifier>micro</uberJarClassifier>
+                    <deployWar>true</deployWar>
+                </configuration>
+            </plugin>
+            
+            <!-- 
+                Autres extensions par défaut. 
+                Commande pour voir les dépendances des extensions: 
+                mvn dependency:resolve-plugins
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -87,12 +119,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.maven-war-plugin}</version>
             </plugin>
-            
-            <!-- 
-                Autres extensions par défaut. 
-                Voir: 
-                mvn dependency:resolve-plugins
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
