@@ -82,15 +82,7 @@ public class CustomerController implements Serializable {
      * @return La liste des entité
      */
     public List<Customer> find() {
-        var cb = em.getCriteriaBuilder();
-        var query = cb.createQuery(Customer.class);
-        var root = query.from(Customer.class);
-        query.select(root);
-        // /!\ ATTENTION: 
-        // Peut surcharger la mémoire en fonction du nombre de tuple remonté
-        return em
-                .createQuery(query)
-                .getResultList();
+        return Customer.find();
     }
 
     // ------------------------

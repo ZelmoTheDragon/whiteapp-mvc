@@ -1,15 +1,12 @@
 package fr.moselleacademy.mvc.view;
 
 import fr.moselleacademy.mvc.model.entity.Customer;
-import fr.moselleacademy.mvc.model.entity.Customer_;
-import javax.enterprise.inject.spi.CDI;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.persistence.EntityManager;
 
 /**
  * Validateur du champ <i>email</i>. Vérifie que l'adresse de courriel n'est pas
@@ -34,7 +31,7 @@ public class EmailExistValidator implements Validator<String> {
             final UIComponent component,
             final String value) throws ValidatorException {
 
-        if (exists(value)) {
+        if (Customer.emailExists(value)) {
             var lang = context.getViewRoot().getLocale();
             var message = new FacesMessage(
                     FacesMessage.SEVERITY_WARN,
@@ -45,28 +42,6 @@ public class EmailExistValidator implements Validator<String> {
             context.addMessage(null, message);
             throw new ValidatorException(message);
         }
-    }
-
-    /**
-     * Vérifier l'existance de l'adresse de courriel dans la persistance.
-     *
-     * @param email Adresse de courriel
-     * @return La valeur <code>true</code> si cette adresse est déjà utilisée,
-     * sinon la valeur <code>false est retournée
-     */
-    private boolean exists(final String email) {
-        // Ici la classe n'est pas dans un contexte
-        // d'injection de dépendance.
-        // Il faut donc récupérer le gestionnaire d'entité
-        // ce cette manière.
-        var em = CDI.current().select(EntityManager.class).get();
-        var cb = em.getCriteriaBuilder();
-        var query = cb.createQuery(Long.class);
-        var root = query.from(Customer.class);
-        query.select(cb.count(root));
-        query.where(cb.equal(root.get(Customer_.email), email));
-        var result = em.createQuery(query).getSingleResult();
-        return result == 1L;
     }
 
 }
