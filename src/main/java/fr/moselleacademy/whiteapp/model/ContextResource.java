@@ -45,6 +45,7 @@ public class ContextResource {
      */
     public void clearEntityManager(@Disposes final EntityManager em) {
         em.clear();
+        em.close();
     }
 
 }
