@@ -6,7 +6,6 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 /**
@@ -22,12 +21,6 @@ public class CustomerController implements Serializable {
      * Numéro de série.
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * Gestionnaire d'entité.
-     */
-    @Inject
-    private transient EntityManager em;
 
     /**
      * Entité en cours de manipulation. Cette entité doit avoir le même cycle de
