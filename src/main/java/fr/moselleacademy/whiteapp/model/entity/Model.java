@@ -66,7 +66,6 @@ public abstract class Model implements Serializable {
             var query = cb.createQuery(Long.class);
             var root = query.from(getClass());
             query.select(cb.count(root));
-
             var pk = getIdentifier();
             var pkType = getIdentifierType();
             var predicate = cb.equal(root.get(pkType), pk);
@@ -87,11 +86,11 @@ public abstract class Model implements Serializable {
         // Rendre accèssible de manière statique
         var em = getEntityManager();
         var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(Long.class);
-        var root = q.from(getClass());
-        q.select(cb.count(root));
+        var query = cb.createQuery(Long.class);
+        var root = query.from(getClass());
+        query.select(cb.count(root));
         return em
-                .createQuery(q)
+                .createQuery(query)
                 .getSingleResult();
     }
 
@@ -107,13 +106,13 @@ public abstract class Model implements Serializable {
         // Rendre accèssible de manière statique
         var em = getEntityManager();
         var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(Long.class);
-        var root = q.from(getClass());
-        q.select(cb.count(root));
-        var p = cb.equal(root.get(column.getName()), value);
-        q.where(p);
+        var query = cb.createQuery(Long.class);
+        var root = query.from(getClass());
+        query.select(cb.count(root));
+        var predicate = cb.equal(root.get(column.getName()), value);
+        query.where(predicate);
         return em
-                .createQuery(q)
+                .createQuery(query)
                 .getSingleResult();
     }
 
@@ -128,12 +127,12 @@ public abstract class Model implements Serializable {
         // Rendre accèssible de manière statique
         var em = getEntityManager();
         var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(getClass());
-        q.from(getClass());
+        var query = cb.createQuery(getClass());
+        query.from(getClass());
         // /!\ ATTENTION: 
         // Peut surcharger la mémoire en fonction du nombre de tuple remonté
         return (List<E>) em
-                .createQuery(q)
+                .createQuery(query)
                 .getResultList();
     }
 
@@ -167,12 +166,12 @@ public abstract class Model implements Serializable {
         // Rendre accèssible de manière statique
         var em = getEntityManager();
         var cb = em.getCriteriaBuilder();
-        var q = cb.createQuery(getClass());
-        var root = q.from(getClass());
-        var p = cb.equal(root.get(column.getName()), value);
-        q.where(p);
+        var query = cb.createQuery(getClass());
+        var root = query.from(getClass());
+        var predicate = cb.equal(root.get(column.getName()), value);
+        query.where(predicate);
         return (List<E>) em
-                .createQuery(q)
+                .createQuery(query)
                 .getSingleResult();
     }
 

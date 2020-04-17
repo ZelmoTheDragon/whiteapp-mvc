@@ -7,7 +7,6 @@
     Déclare les ressources du serveur.
 -->
 <resources>
-    <!-- FIXME: La ressource n'est pas trouvée au déploiement! -->
     
     <jdbc-connection-pool
         name="WhiteAppH2" 
