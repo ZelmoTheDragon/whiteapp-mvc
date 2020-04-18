@@ -8,7 +8,7 @@
     
     <groupId>fr.moselleacademy</groupId>
     <artifactId>whiteapp-mvc</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>whiteapp-mvc</name>
     
@@ -32,6 +32,7 @@
         <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
         <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
         <version.sonar-maven-plugin>3.7.0.1746</version.sonar-maven-plugin>
+	<version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
         
 		<!--The project's unique key. Allowed characters are: letters, numbers, -, _, . and :, with at least one non-digit.	For Maven projects, this defaults to <groupId>:<artifactId>-->
         <sonar.projectKey>Nonorc_whiteapp-mvc</sonar.projectKey>
@@ -164,6 +165,11 @@
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${version.sonar-maven-plugin}</version>
+           </plugin>
+           <plugin>
+               <groupId>org.jacoco</groupId>
+               <artifactId>jacoco-maven-plugin</artifactId>
+               <version>${version.jacoco-maven-plugin}</version>
            </plugin>
         </plugins>
     </build>
