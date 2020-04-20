@@ -23,7 +23,7 @@
                 <h:outputText value="#{m['customer.form_create']}" rendered="#{not customerController.entity.contains()}" />
                 <h:outputText value="#{m['customer.form_update']}" rendered="#{customerController.entity.contains()}"/>
             </legend>
-            <h:form id="customerFormSave">
+            <h:form id="customerFormSave" prependId="false">
                 <h:panelGrid columns="3">
                     <h:outputLabel for="givenName" value="#{m['customer.givenName']}" />
                     <h:inputText id="givenName" value="#{customerController.entity.givenName}" />
@@ -71,7 +71,7 @@
             <legend>
                 <h:outputText value="#{m['customer.table']}" />
             </legend>
-            <h:form id="customerFormShow">
+            <h:form id="customerFormShow" prependId="false">
                 <h:dataTable 
                     headerClass="table-head"
                     rowClasses="table-row"

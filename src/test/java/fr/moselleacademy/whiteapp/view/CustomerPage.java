@@ -8,19 +8,19 @@ import org.openqa.selenium.support.FindBy;
 @Location("customer.xhtml")
 public class CustomerPage {
 
-    @FindBy(id = "customerFormSave:givenName")
+    @FindBy(id = "givenName")
     private WebElement givenName;
 
-    @FindBy(id = "customerFormSave:familyName")
+    @FindBy(id = "familyName")
     private WebElement familyName;
 
-    @FindBy(id = "customerFormSave:email")
+    @FindBy(id = "email")
     private WebElement email;
 
-    @FindBy(id = "customerFormSave:birthDate")
+    @FindBy(id = "birthDate")
     private WebElement birthDate;
 
-    @FindBy(id = "customerFormSave:save")
+    @FindBy(id = "save")
     private WebElement save;
 
     public CustomerPage() {

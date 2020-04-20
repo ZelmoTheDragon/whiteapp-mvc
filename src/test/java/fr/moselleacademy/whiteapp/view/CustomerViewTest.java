@@ -81,6 +81,8 @@ public class CustomerViewTest {
     public void save() {
         var path = deploymentUrl.toExternalForm() + "/customer.xhtml";
         browser.get(path);
+        var html = browser.getPageSource();
+        System.out.println(html);
         page.save();
     }
 
