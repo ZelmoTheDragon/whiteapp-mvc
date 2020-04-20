@@ -39,11 +39,10 @@
         <!-- Version des bibliothèques -->
         <version.junit>4.13</version.junit>
         <version.arquillian-bom>1.6.0.Final</version.arquillian-bom>
-        <version.arquillian-transaction-bom>1.0.5</version.arquillian-transaction-bom>
         <version.arquillian-drone-bom>2.5.1</version.arquillian-drone-bom>
-        <version.arquillian-transaction-jta>1.0.5</version.arquillian-transaction-jta>
         <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
         <version.arquillian-junit-container>1.6.0.Final</version.arquillian-junit-container>
+        <version.graphene-webdriver>2.3.2</version.graphene-webdriver>
         <version.arquillian-payara-server-embedded>2.2</version.arquillian-payara-server-embedded>
         
         <!-- Version des extensions -->
@@ -86,13 +85,6 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-transaction-bom</artifactId>
-            <version>${version.arquillian-transaction-bom}</version>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
             <artifactId>arquillian-drone-bom</artifactId>
             <version>${version.arquillian-drone-bom}</version>
             <type>pom</type>
@@ -100,14 +92,15 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-transaction-jta</artifactId>
-            <version>${version.arquillian-transaction-jta}</version>
+            <artifactId>arquillian-warp-jsf</artifactId>
+            <version>${version.arquillian-warp-jsf}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-warp-jsf</artifactId>
-            <version>${version.arquillian-warp-jsf}</version>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <version>${version.graphene-webdriver}</version>
+            <type>pom</type>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -120,7 +113,7 @@
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-server-embedded</artifactId>
-            <version>2.2</version>
+            <version>${version.arquillian-payara-server-embedded}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

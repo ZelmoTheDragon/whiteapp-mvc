@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Fichier de configuration central de Arquillian
+-->
 <arquillian 
     xmlns="http://jboss.org/schema/arquillian"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,8 +12,24 @@
     </engine>
     <container qualifier="payara-embedded" default="true">
         <configuration>
-            <property name="resourcesXml">src/test/resources/payara-resources.xml</property>
             <property name="configurationXml">src/test/resources/payara-domain.xml</property>
+            <!--
+            <property name="resourcesXml">src/test/resources/payara-resources.xml</property>
+            -->
+            
+            <!-- Sélénium -->
+            <property name="seleniumServerArgs">-debug true -role node -browserTimeout 1000</property>
+            <property name="browser">firefox</property>
+            
+            <!-- Navigateur web Chrome pour Sélénium (Linux x64) -->
+            <property name="chromeDriverUrl">https://chromedriver.storage.googleapis.com/83.0.4103.14/chromedriver_linux64.zip</property>
+            <property name="chromeDriverVersion">83.0.4103.14</property>
+            
+        
+            <!-- Navigateur web Mozilla Firefox pour Sélénium (Linux x64) -->
+            <property name="firefoxDriverUrl">https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz</property>
+            <property name="firefoxDriverVersion">0.26.0</property>
+        
         </configuration>
     </container>
 </arquillian>

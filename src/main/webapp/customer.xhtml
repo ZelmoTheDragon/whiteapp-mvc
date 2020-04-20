@@ -23,7 +23,7 @@
                 <h:outputText value="#{m['customer.form_create']}" rendered="#{not customerController.entity.contains()}" />
                 <h:outputText value="#{m['customer.form_update']}" rendered="#{customerController.entity.contains()}"/>
             </legend>
-            <h:form>
+            <h:form id="customerFormSave">
                 <h:panelGrid columns="3">
                     <h:outputLabel for="givenName" value="#{m['customer.givenName']}" />
                     <h:inputText id="givenName" value="#{customerController.entity.givenName}" />
@@ -58,6 +58,7 @@
                 </h:panelGrid>     
                 <br/>
                 <h:commandButton 
+                    id="save"
                     value="#{m['btn.save']}"
                     actionListener="#{customerController.save()}" />
 
@@ -70,7 +71,7 @@
             <legend>
                 <h:outputText value="#{m['customer.table']}" />
             </legend>
-            <h:form>
+            <h:form id="customerFormShow">
                 <h:dataTable 
                     headerClass="table-head"
                     rowClasses="table-row"
