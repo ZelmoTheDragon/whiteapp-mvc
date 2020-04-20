@@ -1,3 +1,5 @@
 **/target
+**/log.txt
 **/faces-config.NavData
-nb-configuration.xml
+**/nb-configuration.xml
+

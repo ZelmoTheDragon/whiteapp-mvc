@@ -24,6 +24,7 @@
         
         <!-- Version des extensions -->
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+        <version.maven-dependency-plugin>3.1.2</version.maven-dependency-plugin>
         <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
         <version.maven-install-plugin>2.5.2</version.maven-install-plugin>
         <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
@@ -31,6 +32,23 @@
         <version.maven-site-plugin>3.9.0</version.maven-site-plugin>
         <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
         <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
+        
+        <!-- 
+            TEST 
+        -->
+        <!-- Version des bibliothèques -->
+        <version.junit>4.13</version.junit>
+        <version.arquillian-bom>1.6.0.Final</version.arquillian-bom>
+        <version.arquillian-transaction-bom>1.0.5</version.arquillian-transaction-bom>
+        <version.arquillian-drone-bom>2.5.1</version.arquillian-drone-bom>
+        <version.arquillian-transaction-jta>1.0.5</version.arquillian-transaction-jta>
+        <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
+        <version.arquillian-junit-container>1.6.0.Final</version.arquillian-junit-container>
+        <version.arquillian-payara-server-embedded>2.2</version.arquillian-payara-server-embedded>
+        
+        <!-- Version des extensions -->
+        <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
+        
     </properties>
     
     <dependencies>
@@ -48,6 +66,70 @@
             <version>${version.eclipselink}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- TEST -->
+        <!-- JUnit -->
+        <dependency>
+            <!-- TODO: Migrer version JUnit 5 -->
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Arquillian -->
+        <dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-bom</artifactId>
+            <version>${version.arquillian-bom}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-transaction-bom</artifactId>
+            <version>${version.arquillian-transaction-bom}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-bom</artifactId>
+            <version>${version.arquillian-drone-bom}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-transaction-jta</artifactId>
+            <version>${version.arquillian-transaction-jta}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-warp-jsf</artifactId>
+            <version>${version.arquillian-warp-jsf}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <version>${version.arquillian-junit-container}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Payara -->
+        <dependency>
+            <groupId>fish.payara.arquillian</groupId>
+            <artifactId>arquillian-payara-server-embedded</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fish.payara.extras</groupId>
+            <artifactId>payara-embedded-all</artifactId>
+            <version>${version.payara}</version>
+            <scope>test</scope>
+        </dependency>
+        
     </dependencies>
     
     <build>
@@ -85,6 +167,39 @@
             </plugin>
             
             <!-- 
+                TEST 
+            -->
+            
+            <plugin>
+                <!-- Couverture du code par les tests. -->
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${version.jacoco-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/jacoco/jacoco.exec</destFile>
+                            <append>true</append>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/jacoco/jacoco.exec</dataFile>
+                            <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- 
                 Autres extensions par défaut. 
                 Commande pour voir les dépendances des extensions: 
                 mvn dependency:resolve-plugins
@@ -115,6 +230,44 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${version.maven-dependency-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <!--
+                                TEST: 
+                                Récupération du serveur embarqué Payara
+                                dans le dossier 'target'
+                            -->
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>fish.payara.extras</groupId>
+                                    <artifactId>payara-embedded-all</artifactId>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${session.executionRootDirectory}/target/</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven-surefire-plugin}</version>
+                <configuration>
+                    <environmentVariables>
+                        <MICRO_JAR>${session.executionRootDirectory}/target/payara-micro-${version.payara}.jar</MICRO_JAR>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.maven-war-plugin}</version>
             </plugin>
@@ -127,11 +280,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${version.maven-deploy-plugin}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.maven-surefire-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
