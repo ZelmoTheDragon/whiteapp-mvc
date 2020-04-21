@@ -204,6 +204,7 @@
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>
+                    <showDeprecation>true</showDeprecation>
                     <!-- JPA meta modèle -->
                     <annotationProcessors>
                         <annotationProcessor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</annotationProcessor>
