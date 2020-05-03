@@ -20,7 +20,7 @@
     
     <jdbc-resource 
         pool-name="ArquillianH2" 
-        jndi-name="jdbc/Arquillian"
+        jndi-name="java:app/jdbc/Arquillian"
         object-type="user" 
         enabled="true">
         

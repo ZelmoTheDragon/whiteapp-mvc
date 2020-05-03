@@ -68,6 +68,10 @@ public class CustomerViewTest {
                 .addAsWebInfResource("payara-web.xml")
                 .addAsWebInfResource("payara-resources.xml")
                 .addAsResource("persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("Messages_en.properties")
+                .addAsResource("Messages_fr.properties")
+                .addAsResource("ValidationMessages_en.properties")
+                .addAsResource("ValidationMessages_fr.properties")
                 .addPackages(true, "fr.moselleacademy.whiteapp")
                 .merge(
                         webapp,
@@ -81,8 +85,6 @@ public class CustomerViewTest {
     public void save() {
         var path = deploymentUrl.toExternalForm() + "/customer.xhtml";
         browser.get(path);
-        var html = browser.getPageSource();
-        System.out.println(html);
         page.save();
     }
 

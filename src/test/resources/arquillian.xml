@@ -7,32 +7,25 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
+    <defaultProtocol type="Servlet 3.0"/>
     <engine>
         <property name="deploymentExportPath">target/deployments</property>
     </engine>
     <container qualifier="payara-embedded" default="true">
+        <!-- 
+            PAYARA MICRO
+            Configuration du serveur d'application
+        -->
         <configuration>
-            <property name="configurationXml">src/test/resources/payara-domain.xml</property>
-            <!--
             <property name="resourcesXml">src/test/resources/payara-resources.xml</property>
-            -->
-            
-            <!-- Sélénium 
-            <property name="seleniumServerArgs">-debug true -role node -browserTimeout 1000</property>
-            <property name="browser">firefox</property>
-            -->
-            
-            <!-- Navigateur web Chrome pour Sélénium (Linux x64) 
-            <property name="chromeDriverUrl">https://chromedriver.storage.googleapis.com/83.0.4103.14/chromedriver_linux64.zip</property>
-            <property name="chromeDriverVersion">83.0.4103.14</property>
-            -->
-            
-        
-            <!-- Navigateur web Mozilla Firefox pour Sélénium (Linux x64) 
-            <property name="firefoxDriverUrl">https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz</property>
-            <property name="firefoxDriverVersion">0.26.0</property>
-            -->
-        
+            <property name="configurationXml">src/test/resources/payara-domain.xml</property>
         </configuration>
     </container>
+    <extension qualifier="webdriver">
+        <!-- 
+            SELENIUM
+            Configuration du navigateur web.
+        -->
+        <property name="browser">phantomjs</property>
+    </extension>
 </arquillian>

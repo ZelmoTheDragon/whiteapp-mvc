@@ -43,7 +43,7 @@
         <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
         <version.arquillian-junit-container>1.6.0.Final</version.arquillian-junit-container>
         <version.graphene-webdriver>2.3.2</version.graphene-webdriver>
-        <version.arquillian-payara-server-embedded>2.2</version.arquillian-payara-server-embedded>
+        <version.arquillian-payara-micro-5-managed>1.1</version.arquillian-payara-micro-5-managed>
         
         <!-- Version des extensions -->
         <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
@@ -112,13 +112,13 @@
         <!-- Payara -->
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
-            <artifactId>arquillian-payara-server-embedded</artifactId>
-            <version>${version.arquillian-payara-server-embedded}</version>
+            <artifactId>arquillian-payara-micro-5-managed</artifactId>
+            <version>${version.arquillian-payara-micro-5-managed}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>fish.payara.extras</groupId>
-            <artifactId>payara-embedded-all</artifactId>
+            <artifactId>payara-micro</artifactId>
             <version>${version.payara}</version>
             <scope>test</scope>
         </dependency>
@@ -241,7 +241,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>fish.payara.extras</groupId>
-                                    <artifactId>payara-embedded-all</artifactId>
+                                    <artifactId>payara-micro</artifactId>
                                     <overWrite>false</overWrite>
                                     <outputDirectory>${session.executionRootDirectory}/target/</outputDirectory>
                                 </artifactItem>

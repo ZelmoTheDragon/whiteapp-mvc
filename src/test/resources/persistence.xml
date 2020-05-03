@@ -16,7 +16,7 @@
     <!-- Unité de persistance pour test. -->
     <persistence-unit name="arquillian-whiteapp-pu" transaction-type="JTA">
 
-        <jta-data-source>jdbc/Arquillian</jta-data-source>
+        <jta-data-source>java:app/jdbc/Arquillian</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <validation-mode>CALLBACK</validation-mode>

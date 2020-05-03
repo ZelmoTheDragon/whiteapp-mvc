@@ -1,18 +1,23 @@
 package fr.moselleacademy.whiteapp.model.entity;
 
+import javax.inject.Inject;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * Test Unitaire sur une entité persistante.
  *
  * @author MOSELLE Maxime
  */
-//@RunWith(Arquillian.class)
+@RunWith(Arquillian.class)
 public class CustomerTest {
 
-    //@Inject
+    @Inject
     private Customer instance;
 
     /**
@@ -30,7 +35,7 @@ public class CustomerTest {
      *
      * @return Archive web à déployer
      */
-    //@Deployment
+    @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap
                 .create(WebArchive.class, "customer.war")
@@ -46,7 +51,7 @@ public class CustomerTest {
     /**
      * Tester l'injection CDI d'une entité.
      */
-    //@Test
+    @Test
     public void injectEntity() {
         Assert.assertNotNull(instance);
     }
