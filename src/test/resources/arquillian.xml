@@ -28,4 +28,12 @@
         -->
         <property name="browser">phantomjs</property>
     </extension>
+    <extension qualifier="jacoco">
+        <!-- 
+            JACOCO
+            Configuration de la converture de code.
+        -->
+        <property name="includes">fr.moselleacademy.whiteapp.*</property>
+        <property name="appendAsmLibrary">true</property>
+    </extension>
 </arquillian>

@@ -38,16 +38,17 @@
         -->
         <!-- Version des bibliothèques -->
         <version.junit>4.13</version.junit>
+        <version.jacoco>0.8.5</version.jacoco>
+        
         <version.arquillian-bom>1.6.0.Final</version.arquillian-bom>
-        <version.arquillian-drone-bom>2.5.1</version.arquillian-drone-bom>
-        <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
         <version.arquillian-junit-container>1.6.0.Final</version.arquillian-junit-container>
         <version.graphene-webdriver>2.3.2</version.graphene-webdriver>
+        <version.arquillian-drone-bom>2.5.1</version.arquillian-drone-bom>
+        <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
+        <version.arquillian-jacoco>1.1.0</version.arquillian-jacoco>
+        <version.arquillian-jacoco-with-asm>1.1.0</version.arquillian-jacoco-with-asm>
         <version.arquillian-payara-micro-5-managed>1.1</version.arquillian-payara-micro-5-managed>
-        
-        <!-- Version des extensions -->
-        <version.jacoco-maven-plugin>0.8.5</version.jacoco-maven-plugin>
-        
+                
     </properties>
     
     <dependencies>
@@ -66,7 +67,9 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- TEST -->
+        <!-- 
+            TEST 
+        -->
         <!-- JUnit -->
         <dependency>
             <!-- TODO: Migrer version JUnit 5 -->
@@ -75,11 +78,32 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Jacoco -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
+            <version>${version.jacoco}</version>
+            <scope>test</scope>
+        </dependency>
+        
         <!-- Arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian</groupId>
             <artifactId>arquillian-bom</artifactId>
             <version>${version.arquillian-bom}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <version>${version.arquillian-junit-container}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <version>${version.graphene-webdriver}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
@@ -97,16 +121,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <version>${version.graphene-webdriver}</version>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-jacoco</artifactId>
+            <version>${version.arquillian-jacoco}</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <version>${version.arquillian-junit-container}</version>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-jacoco-with-asm</artifactId>
+            <version>${version.arquillian-jacoco-with-asm}</version>
             <scope>test</scope>
         </dependency>
         <!-- Payara -->
@@ -167,7 +191,7 @@
                 <!-- Couverture du code par les tests. -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${version.jacoco-maven-plugin}</version>
+                <version>${version.jacoco}</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
