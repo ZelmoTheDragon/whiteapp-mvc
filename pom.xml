@@ -29,6 +29,7 @@
         <version.maven-install-plugin>2.5.2</version.maven-install-plugin>
         <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
+        <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
         <version.maven-site-plugin>3.9.0</version.maven-site-plugin>
         <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
         <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
@@ -47,8 +48,11 @@
         <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
         <version.arquillian-jacoco>1.1.0</version.arquillian-jacoco>
         <version.arquillian-jacoco-with-asm>1.1.0</version.arquillian-jacoco-with-asm>
-        <version.arquillian-payara-micro-5-managed>1.1</version.arquillian-payara-micro-5-managed>
-                
+        <version.arquillian-payara-micro-managed>2.2</version.arquillian-payara-micro-managed>
+               
+        <jacoco.agent.path>${project.build.directory}/org.jacoco.agent-${version.jacoco}.jar</jacoco.agent.path>
+        <jacoco.option>-javaagent:${jacoco.agent.path}=destfile=${project.build.directory}/jacoco/jacoco-it.exec,append=true</jacoco.option>
+                        
     </properties>
     
     <dependencies>
@@ -82,6 +86,12 @@
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.core</artifactId>
+            <version>${version.jacoco}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
             <version>${version.jacoco}</version>
             <scope>test</scope>
         </dependency>
@@ -136,8 +146,8 @@
         <!-- Payara -->
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
-            <artifactId>arquillian-payara-micro-5-managed</artifactId>
-            <version>${version.arquillian-payara-micro-5-managed}</version>
+            <artifactId>arquillian-payara-micro-managed</artifactId>
+            <version>${version.arquillian-payara-micro-managed}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -157,6 +167,13 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         
         <plugins>
             <!-- 
@@ -269,6 +286,11 @@
                                     <overWrite>false</overWrite>
                                     <outputDirectory>${session.executionRootDirectory}/target/</outputDirectory>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jacoco</groupId>
+                                    <artifactId>org.jacoco.agent</artifactId>
+                                    <outputDirectory>${session.executionRootDirectory}/target/</outputDirectory>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -283,6 +305,11 @@
                         <MICRO_JAR>${session.executionRootDirectory}/target/payara-micro-${version.payara}.jar</MICRO_JAR>
                     </environmentVariables>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${version.maven-failsafe-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

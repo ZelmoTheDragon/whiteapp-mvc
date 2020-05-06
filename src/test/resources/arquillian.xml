@@ -19,6 +19,7 @@
         <configuration>
             <property name="resourcesXml">src/test/resources/payara-resources.xml</property>
             <property name="configurationXml">src/test/resources/payara-domain.xml</property>
+            <property name="javaVmArguments">${jacoco.option}</property>
         </configuration>
     </container>
     <extension qualifier="webdriver">
