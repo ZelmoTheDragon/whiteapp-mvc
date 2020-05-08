@@ -16,6 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>11</version.java>
         <version.javaee>8.0</version.javaee>
+        <version.primefaces>8.0</version.primefaces>
         <version.eclipselink>2.7.6</version.eclipselink>
         
         <!-- Serveur embarqué -->
@@ -63,6 +64,13 @@
             <artifactId>javaee-web-api</artifactId>
             <version>${version.javaee}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- Bibliothèque graphique -->
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${version.primefaces}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <!-- Générateur du méta modèle JPA -->
@@ -200,6 +208,13 @@
                     <deployWar>true</deployWar>
                     <autoDeployEmptyContextRoot>false</autoDeployEmptyContextRoot>
                     <autoDeployContextRoot>/whiteapp</autoDeployContextRoot>
+                    <customJars>
+                        <artifactItem>
+                            <groupId>org.primefaces</groupId>
+                            <artifactId>primefaces</artifactId>
+                            <version>${version.primefaces}</version>
+                        </artifactItem>
+                    </customJars>
                 </configuration>
             </plugin>
             
@@ -318,11 +333,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.maven-war-plugin}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${version.maven-dependency-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
