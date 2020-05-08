@@ -24,14 +24,36 @@
         
         <!-- Version des extensions -->
         <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+        <version.maven-dependency-plugin>3.1.2</version.maven-dependency-plugin>
         <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
         <version.maven-dependency-plugin>3.1.2</version.maven-dependency-plugin>
         <version.maven-install-plugin>2.5.2</version.maven-install-plugin>
         <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
+        <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
         <version.maven-site-plugin>3.9.0</version.maven-site-plugin>
         <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
         <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
+        
+        <!-- 
+            TEST 
+        -->
+        <!-- Version des bibliothèques -->
+        <version.junit>4.13</version.junit>
+        <version.jacoco>0.8.5</version.jacoco>
+        
+        <version.arquillian-bom>1.6.0.Final</version.arquillian-bom>
+        <version.arquillian-junit-container>1.6.0.Final</version.arquillian-junit-container>
+        <version.graphene-webdriver>2.3.2</version.graphene-webdriver>
+        <version.arquillian-drone-bom>2.5.1</version.arquillian-drone-bom>
+        <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
+        <version.arquillian-jacoco>1.1.0</version.arquillian-jacoco>
+        <version.arquillian-jacoco-with-asm>1.1.0</version.arquillian-jacoco-with-asm>
+        <version.arquillian-payara-micro-managed>2.2</version.arquillian-payara-micro-managed>
+               
+        <jacoco.agent.path>${project.build.directory}/org.jacoco.agent-${version.jacoco}.jar</jacoco.agent.path>
+        <jacoco.option>-javaagent:${jacoco.agent.path}=destfile=${project.build.directory}/jacoco/jacoco-it.exec</jacoco.option>
+                        
     </properties>
     
     <dependencies>
@@ -49,6 +71,93 @@
             <version>${version.eclipselink}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- 
+            TEST 
+        -->
+        <!-- JUnit -->
+        <dependency>
+            <!-- TODO: Migrer version JUnit 5 -->
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Jacoco -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
+            <version>${version.jacoco}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
+            <version>${version.jacoco}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Arquillian -->
+        <dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-bom</artifactId>
+            <version>${version.arquillian-bom}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <version>${version.arquillian-junit-container}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <version>${version.graphene-webdriver}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-bom</artifactId>
+            <version>${version.arquillian-drone-bom}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-warp-jsf</artifactId>
+            <version>${version.arquillian-warp-jsf}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-jacoco</artifactId>
+            <version>${version.arquillian-jacoco}</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-jacoco-with-asm</artifactId>
+            <version>${version.arquillian-jacoco-with-asm}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Payara -->
+        <dependency>
+            <groupId>fish.payara.arquillian</groupId>
+            <artifactId>arquillian-payara-micro-managed</artifactId>
+            <version>${version.arquillian-payara-micro-managed}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fish.payara.extras</groupId>
+            <artifactId>payara-micro</artifactId>
+            <version>${version.payara}</version>
+            <scope>test</scope>
+        </dependency>
+        
     </dependencies>
     
     <build>
@@ -59,6 +168,13 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         
         <plugins>
             <!-- 
@@ -86,6 +202,39 @@
             </plugin>
             
             <!-- 
+                TEST 
+            -->
+            
+            <plugin>
+                <!-- Couverture du code par les tests. -->
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${version.jacoco}</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/jacoco/jacoco.exec</destFile>
+                            <append>true</append>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/jacoco/jacoco.exec</dataFile>
+                            <outputDirectory>${project.build.directory}/jacoco</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- 
                 Autres extensions par défaut. 
                 Commande pour voir les dépendances des extensions: 
                 mvn dependency:resolve-plugins
@@ -97,6 +246,7 @@
                 <configuration>
                     <source>${version.java}</source>
                     <target>${version.java}</target>
+                    <showDeprecation>true</showDeprecation>
                     <!-- JPA meta modèle -->
                     <annotationProcessors>
                         <annotationProcessor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</annotationProcessor>
@@ -113,6 +263,54 @@
                         <version>${version.eclipselink}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${version.maven-dependency-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <!--
+                                TEST: 
+                                Récupération du serveur embarqué Payara
+                                dans le dossier 'target'
+                            -->
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>fish.payara.extras</groupId>
+                                    <artifactId>payara-micro</artifactId>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jacoco</groupId>
+                                    <artifactId>org.jacoco.agent</artifactId>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven-surefire-plugin}</version>
+                <configuration>
+                    <systemProperties>
+                        <payara.microJar>${project.build.directory}/payara-micro-${version.payara}.jar</payara.microJar>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${version.maven-failsafe-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -133,11 +331,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${version.maven-deploy-plugin}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${version.maven-surefire-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
