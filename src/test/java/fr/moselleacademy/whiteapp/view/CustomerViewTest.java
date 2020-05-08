@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Test d'intégration de la page web JSF.
+ * Test d'intégration de la page web JSF. (Non supporté par Jacoco)
  *
  * @author MOSELLE Maxime
  */
