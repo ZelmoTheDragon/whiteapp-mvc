@@ -40,6 +40,14 @@ Exécution du projet:
     mvn payara-micro:start
 ~~~
 
+OU
+
+~~~
+    java -jar target/whiteapp-micro-X.Y.Z.jar
+~~~
+
+> Où `X.Y.Z` désigne le numéro de version du projet.
+
 Puis accéder à l'adresse:
 ~~~
 http://localhost:8080/whiteapp
