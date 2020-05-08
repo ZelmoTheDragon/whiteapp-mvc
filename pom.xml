@@ -198,6 +198,8 @@
                     <payaraVersion>${version.payara}</payaraVersion>
                     <uberJarClassifier>micro</uberJarClassifier>
                     <deployWar>true</deployWar>
+                    <autoDeployEmptyContextRoot>false</autoDeployEmptyContextRoot>
+                    <autoDeployContextRoot>/whiteapp</autoDeployContextRoot>
                 </configuration>
             </plugin>
             
