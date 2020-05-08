@@ -5,6 +5,7 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/layout.xhtml">
 
     <ui:define name="header">
@@ -18,108 +19,120 @@
     </ui:define>
 
     <ui:define name="main">
-        <fieldset>
-            <legend>
-                <h:outputText value="#{m['customer.form_create']}" rendered="#{not customerController.entity.contains()}" />
-                <h:outputText value="#{m['customer.form_update']}" rendered="#{customerController.entity.contains()}"/>
-            </legend>
-            <h:form id="customerFormSave" prependId="false">
-                <h:panelGrid columns="3">
-                    <h:outputLabel for="givenName" value="#{m['customer.givenName']}" />
-                    <h:inputText id="givenName" value="#{customerController.entity.givenName}" />
+        <h:form id="customerFormSave" prependId="false">
+            <p:panel  header="#{customerController.entity.contains() ? m['customer.form_update'] : m['customer.form_create']}">
+                <p:panelGrid columns="3" layout="grid">
+                    <p:outputLabel for="givenName" value="#{m['customer.givenName']}" />
+                    <p:inputText id="givenName" value="#{customerController.entity.givenName}" />
                     <h:message for="givenName" errorClass="required" />
 
                     <h:outputLabel for="familyName" value="#{m['customer.familyName']}" />
-                    <h:inputText id="familyName" value="#{customerController.entity.familyName}" />
-                    <h:message for="familyName" errorClass="required" />
+                    <p:inputText id="familyName" value="#{customerController.entity.familyName}" />
+                    <p:message for="familyName" />
 
-                    <h:outputLabel for="email" value="#{m['customer.email']}" />
-                    <h:inputText id="email" value="#{customerController.entity.email}" required="true" >
-                        <!-- Surchager la balise 'h:inputText' pour le support HTML5 du type 'email' -->
+                    <p:outputLabel for="email" value="#{m['customer.email']}" />
+                    <p:inputText id="email" value="#{customerController.entity.email}" required="true" >
+                        <!-- Surchager la balise 'p:inputText' pour le support HTML5 du type 'email' -->
                         <f:passThroughAttribute name="type" value="email" />
                         <!-- Ajout du validateur pour vérifier que l'email n'est pas déjà utilisé -->
                         <f:validator validatorId="emailExistValidator" disabled="#{customerController.entity.contains()}" />
-                    </h:inputText>
-                    <h:message for="email" errorClass="required" />
+                    </p:inputText>
+                    <p:message for="email" />
 
-                    <h:outputLabel for="birthDate" value="#{m['customer.birthDate']}" />
-                    <h:inputText id="birthDate" value="#{customerController.entity.birthDate}">
-                        <!-- Surchager la balise 'h:inputText' pour le support HTML5 du type 'date' -->
-                        <f:passThroughAttribute name="type" value="date" />
-                        <!-- Ajout du convertisseur pour le support du type java LocalDate -->
-                        <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
-                    </h:inputText>
-                    <h:message for="birthDate" errorClass="required" />
+                    <p:outputLabel for="birthDate" value="#{m['customer.birthDate']}" />
+                    <p:datePicker 
+                        id="birthDate" 
+                        locale="#{m['app.lang']}" 
+                        pattern="yyyy-MM-dd" 
+                        value="#{customerController.entity.birthDate}"/>
+
+                    <p:message for="birthDate" />
 
                     <br/>
                     <br/>
-                    <h:messages globalOnly="true" errorClass="required" warnClass="warn"  />
+                    <p:messages globalOnly="true"  />
 
-                </h:panelGrid>     
+                </p:panelGrid>     
                 <br/>
-                <h:commandButton 
+                <p:commandButton 
                     id="save"
+                    icon="pi pi-save"
                     value="#{m['btn.save']}"
-                    actionListener="#{customerController.save()}" />
+                    action="#{customerController.save()}"
+                    update="@form customerFormShow"/>
 
-                <h:commandButton value="#{m['btn.reset']}" type="reset"/>
+                &#160;
 
-            </h:form>
-        </fieldset>
+                <p:commandButton 
+                    id="reset"
+                    type="reset" 
+                    icon="pi pi-times"
+                    value="#{m['btn.reset']}" />
 
-        <fieldset>
-            <legend>
-                <h:outputText value="#{m['customer.table']}" />
-            </legend>
-            <h:form id="customerFormShow" prependId="false">
-                <h:dataTable 
-                    headerClass="table-head"
-                    rowClasses="table-row"
-                    value="#{customerController.find()}" 
-                    var="e" >
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{m['customer.givenName']}" />
-                        </f:facet>
-                        <h:outputText value="#{e.givenName}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{m['customer.familyName']}" />
-                        </f:facet>
-                        <h:outputText value="#{e.familyName}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{m['customer.email']}" />
-                        </f:facet>
-                        <h:outputText value="#{e.email}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{m['customer.birthDate']}" />
-                        </f:facet>
-                        <h:outputText value="#{e.birthDate}"  >
-                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-                        </h:outputText>
-                    </h:column>
+            </p:panel>
+        </h:form>
 
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{m['action']}" />
-                        </f:facet>
+        &#160;
 
-                        <h:commandButton 
-                            value="#{m['btn.edit']}" 
-                            actionListener="#{customerController.edit(e)}" />
+        <h:form id="customerFormShow" prependId="false">
+            <p:dataTable 
+                value="#{customerController.find()}" 
+                emptyMessage="#{m['datatable.empty']}"
+                var="e"
+                rendered="#{not customerController.find().isEmpty()}">
+                <f:facet name="header">
+                    <h:outputText value="#{m['customer.table']}" />
+                </f:facet>
 
-                        <h:commandButton 
-                            value="#{m['btn.remove']}" 
-                            actionListener="#{customerController.remove(e)}" />
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-        </fieldset>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{m['customer.givenName']}" />
+                    </f:facet>
+                    <h:outputText value="#{e.givenName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{m['customer.familyName']}" />
+                    </f:facet>
+                    <h:outputText value="#{e.familyName}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{m['customer.email']}" />
+                    </f:facet>
+                    <h:outputText value="#{e.email}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{m['customer.birthDate']}" />
+                    </f:facet>
+                    <h:outputText value="#{e.birthDate}"  >
+                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{m['action']}" />
+                    </f:facet>
+
+                    <p:commandButton 
+                        value="#{m['btn.edit']}"
+                        icon="pi pi-pencil"
+                        update="customerFormSave"
+                        action="#{customerController.edit(e)}" />
+
+                    &#160;
+
+                    <p:commandButton 
+                        value="#{m['btn.remove']}" 
+                        icon="pi pi-trash"
+                        update="@form"
+                        action="#{customerController.remove(e)}" />
+                    
+                </p:column>
+            </p:dataTable>
+        </h:form>
 
     </ui:define>
 

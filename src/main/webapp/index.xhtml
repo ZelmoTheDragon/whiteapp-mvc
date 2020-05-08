@@ -5,6 +5,7 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/layout.xhtml">
 
     <ui:define name="title">
@@ -15,7 +16,7 @@
 
     <ui:define name="main">
         <h3 class="title">
-            <h:link outcome="customer" value="#{m['btn.go']}"/>
+            <p:linkButton outcome="customer" icon="pi pi-star" value="#{m['btn.go']}"/>
         </h3>
     </ui:define>
 
