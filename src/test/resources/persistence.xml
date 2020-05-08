@@ -14,7 +14,7 @@
     version="2.2">
 
     <!-- Unité de persistance pour test. -->
-    <persistence-unit name="arquillian-whiteapp-pu" transaction-type="JTA">
+    <persistence-unit name="whiteapp-pu" transaction-type="JTA">
 
         <jta-data-source>java:app/jdbc/Arquillian</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>

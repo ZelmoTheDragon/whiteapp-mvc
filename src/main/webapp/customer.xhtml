@@ -31,11 +31,10 @@
                     <p:message for="familyName" />
 
                     <p:outputLabel for="email" value="#{m['customer.email']}" />
-                    <p:inputText id="email" value="#{customerController.entity.email}" required="true" >
+                    <p:inputText id="email" value="#{customerController.entity.email}" validator="emailExistValidator" required="true">
                         <!-- Surchager la balise 'p:inputText' pour le support HTML5 du type 'email' -->
                         <f:passThroughAttribute name="type" value="email" />
                         <!-- Ajout du validateur pour vérifier que l'email n'est pas déjà utilisé -->
-                        <f:validator validatorId="emailExistValidator" disabled="#{customerController.entity.contains()}" />
                     </p:inputText>
                     <p:message for="email" />
 
@@ -67,6 +66,7 @@
                     id="reset"
                     type="reset" 
                     icon="pi pi-times"
+                    update="@form"
                     value="#{m['btn.reset']}" />
 
             </p:panel>

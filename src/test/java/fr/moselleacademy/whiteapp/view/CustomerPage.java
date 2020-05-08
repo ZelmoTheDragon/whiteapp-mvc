@@ -59,8 +59,7 @@ public class CustomerPage {
         familyName.sendKeys("DOE");
         email.sendKeys("john.doe@arquillian.org");
         birthDate.sendKeys("1970-01-01");
-
-        Graphene.guardHttp(save).click();
+        Graphene.guardAjax(save).click();
     }
 
 }

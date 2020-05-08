@@ -5,7 +5,7 @@ import java.net.URL;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.graphene.page.Page;
+import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Filters;
@@ -13,6 +13,8 @@ import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -30,9 +32,6 @@ public class CustomerViewTest {
 
     @ArquillianResource
     private URL deploymentUrl;
-
-    @Page
-    private CustomerPage page;
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement de l'environnement
@@ -72,6 +71,14 @@ public class CustomerViewTest {
                 .addAsResource("Messages_fr.properties")
                 .addAsResource("ValidationMessages_en.properties")
                 .addAsResource("ValidationMessages_fr.properties")
+                .addAsLibraries(Maven
+                        .resolver()
+                        .loadPomFromFile("pom.xml")
+                        .importDependencies(ScopeType.COMPILE)
+                        .resolve()
+                        .withTransitivity()
+                        .asFile()
+                )
                 .addPackages(true, "fr.moselleacademy.whiteapp")
                 .merge(
                         webapp,
@@ -82,10 +89,10 @@ public class CustomerViewTest {
 
     @Test
     @RunAsClient
-    public void save() {
-        var path = deploymentUrl.toExternalForm() + "/customer.xhtml";
-        browser.get(path);
-        page.save();
+    public void createCustomer() {
+        browser.navigate().to(deploymentUrl);
+        var customerPage = Graphene.goTo(CustomerPage.class);
+        customerPage.save();
     }
 
 }

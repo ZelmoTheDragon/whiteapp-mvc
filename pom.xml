@@ -51,6 +51,7 @@
         <version.arquillian-jacoco>1.1.0</version.arquillian-jacoco>
         <version.arquillian-jacoco-with-asm>1.1.0</version.arquillian-jacoco-with-asm>
         <version.arquillian-payara-micro-managed>2.2</version.arquillian-payara-micro-managed>
+        <version.shrinkwrap.resolver>3.1.4</version.shrinkwrap.resolver>
                
         <jacoco.agent.path>${project.build.directory}/org.jacoco.agent-${version.jacoco}.jar</jacoco.agent.path>
         <jacoco.option>-javaagent:${jacoco.agent.path}=destfile=${project.build.directory}/jacoco/jacoco-it.exec</jacoco.option>
@@ -151,7 +152,27 @@
             <artifactId>arquillian-jacoco-with-asm</artifactId>
             <version>${version.arquillian-jacoco-with-asm}</version>
             <scope>test</scope>
+        </dependency>   
+        <!-- Shrinkwrap resolver -->
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-bom</artifactId>
+            <version>${version.shrinkwrap.resolver}</version>
+            <type>pom</type>
+            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <version>${version.shrinkwrap.resolver}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven-archive</artifactId>
+            <version>${version.shrinkwrap.resolver}</version>
+            <scope>test</scope>
+        </dependency>    
         <!-- Payara -->
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
