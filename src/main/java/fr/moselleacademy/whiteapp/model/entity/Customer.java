@@ -7,9 +7,12 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.spi.CDI;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.Email;
@@ -74,6 +77,11 @@ public class Customer extends Model {
     @Past
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "picture")
+    private String picture;
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
@@ -249,6 +257,14 @@ public class Customer extends Model {
 
     public void setBirthDate(final LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
 }

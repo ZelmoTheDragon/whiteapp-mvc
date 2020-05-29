@@ -19,7 +19,7 @@
     </ui:define>
 
     <ui:define name="main">
-        <h:form id="customerFormSave" prependId="false">
+        <h:form id="customerFormSave" prependId="false" enctype="multipart/form-data">
             <p:panel  header="#{customerController.entity.contains() ? m['customer.form_update'] : m['customer.form_create']}">
                 <p:panelGrid columns="3" layout="grid">
                     <p:outputLabel for="givenName" value="#{m['customer.givenName']}" />
@@ -47,6 +47,13 @@
 
                     <p:message for="birthDate" />
 
+                    <h:outputLabel for="picture" value="#{m['customer.picture']}" />
+                    <h:inputFile 
+                        id="picture"
+                        value="#{customerController.file}" />
+
+                    <p:message for="picture" />
+
                     <br/>
                     <br/>
                     <p:messages globalOnly="true"  />
@@ -56,6 +63,7 @@
                 <p:commandButton 
                     id="save"
                     icon="pi pi-save"
+                    ajax="false"
                     value="#{m['btn.save']}"
                     action="#{customerController.save()}"
                     update="@form customerFormShow"/>
@@ -110,6 +118,15 @@
                         <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
                     </h:outputText>
                 </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{m['customer.picture']}" />
+                    </f:facet>
+                    <h:graphicImage 
+                        width="64px"
+                        height="64px"
+                        value="data:image/png;base64,#{e.picture}" />
+                </p:column>
 
                 <p:column>
                     <f:facet name="header">
@@ -129,7 +146,7 @@
                         icon="pi pi-trash"
                         update="@form"
                         action="#{customerController.remove(e)}" />
-                    
+
                 </p:column>
             </p:dataTable>
         </h:form>

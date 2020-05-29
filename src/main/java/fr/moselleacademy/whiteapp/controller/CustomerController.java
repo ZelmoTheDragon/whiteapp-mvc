@@ -1,11 +1,14 @@
 package fr.moselleacademy.whiteapp.controller;
 
 import fr.moselleacademy.whiteapp.model.entity.Customer;
+import fr.moselleacademy.whiteapp.view.ImageResize;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 import javax.transaction.Transactional;
 
 /**
@@ -30,6 +33,8 @@ public class CustomerController implements Serializable {
     @Inject
     private Customer entity;
 
+    private Part file;
+
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
      * de Java EE.
@@ -44,6 +49,11 @@ public class CustomerController implements Serializable {
      */
     @Transactional
     public void save() {
+        if (Objects.nonNull(file)) {
+            var picture = ImageResize.convertImageAsBase64(file);
+            this.entity.setPicture(picture);
+        }
+
         this.entity.save();
 
         // Réinitialiser l'instance courante
@@ -87,6 +97,14 @@ public class CustomerController implements Serializable {
 
     public void setEntity(Customer entity) {
         this.entity = entity;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
     }
 
 }
