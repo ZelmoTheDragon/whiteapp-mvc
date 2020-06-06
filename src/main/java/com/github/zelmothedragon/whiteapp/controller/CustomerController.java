@@ -8,8 +8,8 @@ import java.util.Objects;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 import javax.transaction.Transactional;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  * Contrôleur principal pour une entité métier.
@@ -33,7 +33,7 @@ public class CustomerController implements Serializable {
     @Inject
     private Customer entity;
 
-    private Part file;
+    private UploadedFile file;
 
     /**
      * Constructeur par défaut. Requis pour le fonctionnement des technologies
@@ -99,11 +99,11 @@ public class CustomerController implements Serializable {
         this.entity = entity;
     }
 
-    public Part getFile() {
+    public UploadedFile getFile() {
         return file;
     }
 
-    public void setFile(Part file) {
+    public void setFile(UploadedFile file) {
         this.file = file;
     }
 

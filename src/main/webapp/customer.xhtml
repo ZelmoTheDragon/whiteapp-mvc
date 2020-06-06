@@ -47,11 +47,13 @@
 
                     <p:message for="birthDate" />
 
-                    <h:outputLabel for="picture" value="#{m['customer.picture']}" />
-                    <h:inputFile 
-                        id="picture"
-                        value="#{customerController.file}" />
-
+                    <p:outputLabel for="picture" value="#{m['customer.picture']}" />
+                    <p:fileUpload 
+                        id="picture" 
+                        value="#{customerController.file}" 
+                        mode="simple" 
+                        skinSimple="true"/>
+                    
                     <p:message for="picture" />
 
                     <br/>
@@ -64,6 +66,7 @@
                     id="save"
                     icon="pi pi-save"
                     value="#{m['btn.save']}"
+                    ajax="false"
                     action="#{customerController.save()}"
                     update="@form customerFormShow"/>
 

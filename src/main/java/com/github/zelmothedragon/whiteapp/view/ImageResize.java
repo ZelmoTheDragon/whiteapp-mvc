@@ -5,8 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Objects;
 import javax.imageio.ImageIO;
-import javax.servlet.http.Part;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  * Classe utilitaire pour le conversion d'image.
@@ -23,35 +24,39 @@ public final class ImageResize {
     }
 
     /**
-     * 
+     *
      * @param file
-     * @return 
+     * @return
      */
-    public static String convertImageAsBase64(final Part file) {
+    public static String convertImageAsBase64(final UploadedFile file) {
         String picture;
         try (
                 var stream = file.getInputStream();
                 var output = new ByteArrayOutputStream()) {
 
             var image = ImageIO.read(stream);
-            var scaledImage = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
-            var g2d = scaledImage.createGraphics();
-            double sx = (double) scaledImage.getWidth() / (double) image.getWidth();
-            double sy = (double) scaledImage.getHeight() / (double) image.getHeight();
-            var affineTransformation = AffineTransform.getScaleInstance(sx, sy);
-            g2d.transform(affineTransformation);
-            g2d.drawImage(
-                    image,
-                    0,
-                    0,
-                    null
-            );
+            if (Objects.nonNull(image)) {
 
-            g2d.dispose();
+                var scaledImage = new BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB);
+                var g2d = scaledImage.createGraphics();
+                double sx = (double) scaledImage.getWidth() / (double) image.getWidth();
+                double sy = (double) scaledImage.getHeight() / (double) image.getHeight();
+                var affineTransformation = AffineTransform.getScaleInstance(sx, sy);
+                g2d.transform(affineTransformation);
+                g2d.drawImage(
+                        image,
+                        0,
+                        0,
+                        null
+                );
 
-            ImageIO.write(scaledImage, "png", output);
-            picture = Base64.getEncoder().encodeToString(output.toByteArray());
+                g2d.dispose();
 
+                ImageIO.write(scaledImage, "png", output);
+                picture = Base64.getEncoder().encodeToString(output.toByteArray());
+            } else {
+                picture = null;
+            }
         } catch (IOException ex) {
             // TODO: Utiliser un logger
             ex.printStackTrace();
