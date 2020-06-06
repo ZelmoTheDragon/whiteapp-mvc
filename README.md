@@ -7,11 +7,12 @@ une licence de logiciel libre compatible avec la **GNU GPL**.
 
 > En savoir plus sur la licence [CeCILL](http://cecill.info/index.fr.html)
 
-## Objectif
+## Objectifs
 
 Mettre en oeuvre:
 
 * Une architecture *MVC*
+* La bibliothèque graphique *PrimeFaces*
 * Payaram Micro
 * Arquillian
 
