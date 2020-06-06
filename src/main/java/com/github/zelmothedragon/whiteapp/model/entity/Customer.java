@@ -1,4 +1,4 @@
-package fr.moselleacademy.whiteapp.model.entity;
+package com.github.zelmothedragon.whiteapp.model.entity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -201,7 +201,7 @@ public class Customer extends Model {
      *
      * @param email Adresse de courriel
      * @return La valeur <code>true</code> si cette adresse est déjà utilisée,
-     * sinon la valeur <code>false est retournée
+     * sinon la valeur <code>false</code> est retournée
      */
     public static boolean emailExists(final String email) {
         var empty = Customer.ofEmpty();

@@ -1,4 +1,4 @@
-package fr.moselleacademy.whiteapp.view;
+package com.github.zelmothedragon.whiteapp.view;
 
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Location;

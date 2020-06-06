@@ -1,7 +1,7 @@
-package fr.moselleacademy.whiteapp.controller;
+package com.github.zelmothedragon.whiteapp.controller;
 
-import fr.moselleacademy.whiteapp.model.entity.Customer;
-import fr.moselleacademy.whiteapp.view.ImageResize;
+import com.github.zelmothedragon.whiteapp.model.entity.Customer;
+import com.github.zelmothedragon.whiteapp.view.ImageResize;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;

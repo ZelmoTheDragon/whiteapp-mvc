@@ -1,4 +1,4 @@
-package fr.moselleacademy.whiteapp.model.entity;
+package com.github.zelmothedragon.whiteapp.model.entity;
 
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -45,7 +45,7 @@ public class CustomerTest {
                 .addAsWebInfResource("payara-web.xml")
                 .addAsWebInfResource("payara-resources.xml")
                 .addAsResource("persistence.xml", "META-INF/persistence.xml")
-                .addPackages(true, "fr.moselleacademy.whiteapp");
+                .addPackages(true, "com.github.zelmothedragon.whiteapp");
     }
 
     /**

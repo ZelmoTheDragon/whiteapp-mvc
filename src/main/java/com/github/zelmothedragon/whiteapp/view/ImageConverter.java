@@ -1,4 +1,4 @@
-package fr.moselleacademy.whiteapp.view;
+package com.github.zelmothedragon.whiteapp.view;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputFile;

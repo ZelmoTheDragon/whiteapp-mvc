@@ -1,4 +1,4 @@
-package fr.moselleacademy.whiteapp.model.entity;
+package com.github.zelmothedragon.whiteapp.model.entity;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package fr.moselleacademy.whiteapp.view;
+package com.github.zelmothedragon.whiteapp.view;
 
 import java.io.File;
 import java.net.URL;
@@ -79,7 +79,7 @@ public class CustomerViewTest {
                         .withTransitivity()
                         .asFile()
                 )
-                .addPackages(true, "fr.moselleacademy.whiteapp")
+                .addPackages(true, "com.github.zelmothedragon.whiteapp")
                 .merge(
                         webapp,
                         "/",
