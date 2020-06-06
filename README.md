@@ -3,9 +3,17 @@
 Exemple architectural de projet avec les technologies Java EE.
 
 Ce projet est sous licence **CeCILL** (**CE**A **C**NRS **I**NRIA **L**ogiciel **L**ibre),
-une licence de logicielle libre compatible avec la **GNU GPL**.
+une licence de logiciel libre compatible avec la **GNU GPL**.
 
 > En savoir plus sur la licence [CeCILL](http://cecill.info/index.fr.html)
+
+# Objectif
+
+Mettre en oeuvre:
+
+* Une architecture *MVC*
+* Payaram Micro
+* Arquillian
 
 ## Module
 
