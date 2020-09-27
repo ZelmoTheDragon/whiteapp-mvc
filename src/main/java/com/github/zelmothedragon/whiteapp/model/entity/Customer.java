@@ -60,6 +60,7 @@ public class Customer extends Model {
     /**
      * Prénom.
      */
+    @NotBlank
     @Size(max = 255)
     @Column(name = "given_name")
     private String givenName;
@@ -67,6 +68,7 @@ public class Customer extends Model {
     /**
      * Nom de famille.
      */
+    @NotBlank
     @Size(max = 255)
     @Column(name = "family_name")
     private String familyName;
@@ -209,7 +211,7 @@ public class Customer extends Model {
     }
 
     // ------------------------
-    // Accesseurs & Muttateurs
+    // Accesseurs & Mutateurs
     // ------------------------
     public UUID getId() {
         return id;

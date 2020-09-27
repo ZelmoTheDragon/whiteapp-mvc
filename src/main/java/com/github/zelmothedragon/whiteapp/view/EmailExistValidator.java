@@ -18,7 +18,7 @@ import javax.faces.validator.ValidatorException;
 public class EmailExistValidator implements Validator<String> {
 
     /**
-     * Constructeur d'injection.Requis pour le fonctionnement des technologies
+     * Constructeur d'injection. Requis pour le fonctionnement des technologies
      * de Java EE.
      */
     public EmailExistValidator() {

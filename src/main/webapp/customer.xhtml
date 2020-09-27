@@ -20,23 +20,51 @@
 
     <ui:define name="main">
         <h:form id="customerFormSave" prependId="false" enctype="multipart/form-data">
-            <p:panel  header="#{customerController.entity.contains() ? m['customer.form_update'] : m['customer.form_create']}">
+            <p:panel  header="#{customerController.isEditMode() ? m['customer.form_update'] : m['customer.form_create']}">
                 <p:panelGrid columns="3" layout="grid">
+
                     <p:outputLabel for="givenName" value="#{m['customer.givenName']}" />
                     <p:inputText id="givenName" value="#{customerController.entity.givenName}" />
-                    <h:message for="givenName" errorClass="required" />
+                    <p:message for="givenName" />
 
-                    <h:outputLabel for="familyName" value="#{m['customer.familyName']}" />
+                    <p:outputLabel for="familyName" value="#{m['customer.familyName']}" />
                     <p:inputText id="familyName" value="#{customerController.entity.familyName}" />
                     <p:message for="familyName" />
 
-                    <p:outputLabel for="email" value="#{m['customer.email']}" />
-                    <p:inputText id="email" value="#{customerController.entity.email}" validator="emailExistValidator" required="true">
+                    <!-- Mode: create -->
+                    <p:outputLabel 
+                        for="emailCreate" 
+                        rendered="#{not customerController.isEditMode()}"
+                        value="#{m['customer.email']}" />
+                    <p:inputText 
+                        id="emailCreate" 
+                        value="#{customerController.entity.email}" 
+                        validator="emailExistValidator" 
+                        rendered="#{not customerController.isEditMode()}"
+                        required="true">
+
                         <!-- Surchager la balise 'p:inputText' pour le support HTML5 du type 'email' -->
                         <f:passThroughAttribute name="type" value="email" />
                         <!-- Ajout du validateur pour vérifier que l'email n'est pas déjà utilisé -->
                     </p:inputText>
-                    <p:message for="email" />
+                    <p:message for="emailUpdate" rendered="#{not customerController.isEditMode()}" />
+
+                    <!-- Mode: update -->
+                    <p:outputLabel 
+                        for="emailUpdate" 
+                        rendered="#{customerController.isEditMode()}"
+                        value="#{m['customer.email']}" />
+                    <p:inputText 
+                        id="emailUpdate" 
+                        value="#{customerController.entity.email}" 
+                        rendered="#{customerController.isEditMode()}"
+                        required="true">
+
+                        <!-- Surchager la balise 'p:inputText' pour le support HTML5 du type 'email' -->
+                        <f:passThroughAttribute name="type" value="email" />
+                        <!-- Ajout du validateur pour vérifier que l'email n'est pas déjà utilisé -->
+                    </p:inputText>
+                    <p:message for="emailUpdate" rendered="#{customerController.isEditMode()}" />
 
                     <p:outputLabel for="birthDate" value="#{m['customer.birthDate']}" />
                     <p:datePicker 
@@ -51,9 +79,10 @@
                     <p:fileUpload 
                         id="picture" 
                         value="#{customerController.file}" 
+                        converter="imageConverter"
                         mode="simple" 
                         skinSimple="true"/>
-                    
+
                     <p:message for="picture" />
 
                     <br/>
@@ -66,7 +95,6 @@
                     id="save"
                     icon="pi pi-save"
                     value="#{m['btn.save']}"
-                    ajax="false"
                     action="#{customerController.save()}"
                     update="@form customerFormShow"/>
 

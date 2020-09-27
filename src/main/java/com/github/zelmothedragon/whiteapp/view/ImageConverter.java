@@ -1,29 +1,31 @@
 package com.github.zelmothedragon.whiteapp.view;
 
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlInputFile;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.Part;
 
 /**
+ * Convertisseur pour champ de formulaire de type image.
  *
  * @author MOSELLE Maxime
  */
 @FacesConverter(value = "imageConverter", managed = true)
 public class ImageConverter implements Converter<String> {
 
+    /**
+     * Constructeur d'injection. Requis pour le fonctionnement des technologies
+     * de Java EE.
+     */
+    public ImageConverter() {
+        // Ne pas appeler explicitement.
+    }
+
     @Override
     public String getAsObject(
             final FacesContext context,
             final UIComponent component,
             final String value) {
-
-        System.out.printf("COMPONENT: %s%n", component);
-
-        var input = (HtmlInputFile) component;
-        var file = (Part) input.getSubmittedValue();
 
         return null;
     }

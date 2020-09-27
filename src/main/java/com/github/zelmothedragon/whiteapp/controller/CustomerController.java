@@ -88,8 +88,18 @@ public class CustomerController implements Serializable {
         return Customer.find();
     }
 
+    /**
+     * Indiquer si la page associée est en mode edition ou création.
+     *
+     * @return La valeur <code>true</code> si la page est en mode edition, sinon
+     * la valeur <code>false</code> est retournée
+     */
+    public boolean isEditMode() {
+        return entity.contains();
+    }
+
     // ------------------------
-    // Accesseurs & Muttateurs
+    // Accesseurs & Mutateurs
     // ------------------------
     public Customer getEntity() {
         return entity;
