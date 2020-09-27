@@ -28,7 +28,7 @@ public class CustomerPage {
     /**
      * Champ du formulaire pour l'adresse de courriel.
      */
-    @FindBy(id = "email")
+    @FindBy(id = "emailCreate")
     private WebElement email;
 
     /**
@@ -59,7 +59,7 @@ public class CustomerPage {
         familyName.sendKeys("DOE");
         email.sendKeys("john.doe@arquillian.org");
         birthDate.sendKeys("1970-01-01");
-        Graphene.guardHttp(save).click();
+        Graphene.guardAjax(save).click();
     }
 
 }
