@@ -40,7 +40,7 @@
             TEST 
         -->
         <!-- Version des bibliothèques -->
-        <version.junit>4.13</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.jacoco>0.8.5</version.jacoco>
         
         <version.arquillian-bom>1.6.0.Final</version.arquillian-bom>
