@@ -17,7 +17,7 @@ public class FacesConfiguration {
      * de Java EE.
      */
     public FacesConfiguration() {
-        // Ne pas appeler explicitementF
+        // Ne pas appeler explicitement
     }
 
 }
