@@ -24,7 +24,7 @@ public class CustomerController implements Serializable {
      * Numéro de série.
      */
     private static final long serialVersionUID = 1L;
-
+    
     /**
      * Entité en cours de manipulation. Cette entité doit avoir le même cycle de
      * vie que cette classe, dans ce dans, il faut modifier l'entité pour une

@@ -172,7 +172,7 @@ public abstract class Model implements Serializable {
         query.where(predicate);
         return (List<E>) em
                 .createQuery(query)
-                .getSingleResult();
+                .getResultList();
     }
 
     /**

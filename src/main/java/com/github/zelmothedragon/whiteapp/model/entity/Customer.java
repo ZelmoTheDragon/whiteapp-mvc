@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -208,6 +209,18 @@ public class Customer extends Model {
     public static boolean emailExists(final String email) {
         var empty = Customer.ofEmpty();
         return empty.countWhere(Customer_.email, email) == 1L;
+    }
+
+    /**
+     * Rechercher des entités.
+     *
+     * @param column Nom de la colonne de recherche
+     * @param value Valeur
+     * @return La liste des entités liée à la recherche
+     */
+    public static List<Customer> find(final SingularAttribute<Customer, ?> column, final Object value) {
+        var empty = Customer.ofEmpty();
+        return empty.selectWhere(column, value);
     }
 
     // ------------------------

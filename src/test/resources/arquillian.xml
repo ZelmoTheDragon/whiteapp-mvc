@@ -11,32 +11,44 @@
     <engine>
         <property name="deploymentExportPath">target/deployments</property>
     </engine>
+    
+    <!-- 
+        PAYARA MICRO
+        Configuration du serveur d'application
+    -->
     <container qualifier="payara-embedded" default="true">
-        <!-- 
-            PAYARA MICRO
-            Configuration du serveur d'application
-        -->
         <configuration>
             <property name="resourcesXml">src/test/resources/payara-resources.xml</property>
             <property name="configurationXml">src/test/resources/payara-domain.xml</property>
             <property name="javaVmArguments">${jacoco.option}</property>
         </configuration>
     </container>
-    <extension qualifier="webdriver">
-        <!-- 
-            SELENIUM
-            Configuration du navigateur web.
-        -->
-        <property name="browser">${webdriver.browser}</property>
-        <!--<property name="browser">phantomjs</property>-->
-        <!--<property name="browser">firefox</property>-->
-        <!--<property name="browser">chrome</property>-->
+    
+    <!--
+        JTA
+        Gestionnaire de transaction.
+    -->
+    <extension qualifier="transaction">
+        <property name="manager">java:comp/UserTransaction</property>
     </extension>
+    
+    <!-- 
+        DRONE
+        Configuration du navigateur web.
+        Valeur possible:
+        phantomjs
+        firefox
+        chrome
+    -->
+    <extension qualifier="webdriver">
+        <property name="browser">${webdriver.browser}</property>
+    </extension>
+    
+    <!-- 
+        JACOCO
+        Configuration de la converture de code.
+    -->
     <extension qualifier="jacoco">
-        <!-- 
-            JACOCO
-            Configuration de la converture de code.
-        -->
         <property name="includes">com.github.zelmothedragon.whiteapp.*</property>
         <property name="appendAsmLibrary">true</property>
     </extension>

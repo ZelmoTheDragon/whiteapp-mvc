@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 /**
  * Test Unitaire sur une entité persistante.
  *
@@ -40,7 +39,7 @@ public class CustomerTest {
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap
-                .create(WebArchive.class, "customer-controller.war")
+                .create(WebArchive.class, "customer.war")
                 .addAsWebInfResource("beans.xml")
                 .addAsWebInfResource("faces-config.xml")
                 .addAsWebInfResource("web.xml")
@@ -100,11 +99,18 @@ public class CustomerTest {
      * Tester qu'une entité n'existe pas.
      */
     @Test
-    public void testSelectWhere() {
-        var fake = new Customer();
-        var option = fake.selectWhere(UUID.randomUUID());
-
+    public void testFindById() {
+        var option = Customer.find(UUID.randomUUID());
         Assert.assertTrue(option.isEmpty());
+    }
+
+    /**
+     * Tester la recherche d'une entité.
+     */
+    @Test
+    public void testFindByEmail() {
+        var result = Customer.find(Customer_.email, "john.doe@arquillian.org");
+        Assert.assertTrue(result.isEmpty());
     }
 
 }

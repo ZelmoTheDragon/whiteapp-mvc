@@ -1,8 +1,7 @@
 package com.github.zelmothedragon.whiteapp.model;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,12 +10,13 @@ import javax.persistence.PersistenceContext;
  *
  * @author MOSELLE Maxime
  */
-@ApplicationScoped
+@Singleton
 public class ContextResource {
 
     /**
      * Gestionnaire d'entité (injecté par <i>JPA</i>).
      */
+    @Produces
     @PersistenceContext
     private EntityManager em;
 
@@ -26,26 +26,6 @@ public class ContextResource {
      */
     public ContextResource() {
         // Ne pas appeler explicitement
-    }
-
-    /**
-     * Produire une nouvelle instance du gestionnaire d'entité.
-     *
-     * @return Une nouvelle instance du gestionnaire d'entité
-     */
-    @Produces
-    public EntityManager createEntityManager() {
-        return em;
-    }
-
-    /**
-     * Libérer les ressources du gestionnaire d'entité.
-     *
-     * @param em Une instance du gestionnaire d'entité
-     */
-    public void clearEntityManager(@Disposes final EntityManager em) {
-        em.clear();
-        em.close();
     }
 
 }
