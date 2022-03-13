@@ -34,7 +34,7 @@ public class CustomerPage {
     /**
      * Champ du formulaire pour la date de naissance.
      */
-    @FindBy(id = "birthDate")
+    @FindBy(id = "birthDate_input")
     private WebElement birthDate;
 
     /**
@@ -59,7 +59,7 @@ public class CustomerPage {
         familyName.sendKeys("DOE");
         email.sendKeys("john.doe@arquillian.org");
         birthDate.sendKeys("1970-01-01");
-        Graphene.guardAjax(save).click();
+        Graphene.click(save);
     }
 
 }

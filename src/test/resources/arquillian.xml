@@ -27,7 +27,10 @@
             SELENIUM
             Configuration du navigateur web.
         -->
-        <property name="browser">phantomjs</property>
+        <property name="browser">${webdriver.browser}</property>
+        <!--<property name="browser">phantomjs</property>-->
+        <!--<property name="browser">firefox</property>-->
+        <!--<property name="browser">chrome</property>-->
     </extension>
     <extension qualifier="jacoco">
         <!-- 

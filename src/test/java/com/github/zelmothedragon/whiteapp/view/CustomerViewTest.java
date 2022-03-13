@@ -54,10 +54,16 @@ public class CustomerViewTest {
         var webapp = ShrinkWrap
                 .create(GenericArchive.class)
                 .as(ExplodedImporter.class)
-                .importDirectory(
-                        new File("src/main/webapp")
-                )
+                .importDirectory(new File("src/main/webapp"))
                 .as(GenericArchive.class);
+        
+        var libs = Maven
+                        .resolver()
+                        .loadPomFromFile("pom.xml")
+                        .importDependencies(ScopeType.COMPILE)
+                        .resolve()
+                        .withTransitivity()
+                        .asFile();
 
         return ShrinkWrap
                 .create(WebArchive.class, "customer-view.war")
@@ -71,14 +77,7 @@ public class CustomerViewTest {
                 .addAsResource("Messages_fr.properties")
                 .addAsResource("ValidationMessages_en.properties")
                 .addAsResource("ValidationMessages_fr.properties")
-                .addAsLibraries(Maven
-                        .resolver()
-                        .loadPomFromFile("pom.xml")
-                        .importDependencies(ScopeType.COMPILE)
-                        .resolve()
-                        .withTransitivity()
-                        .asFile()
-                )
+                .addAsLibraries(libs)
                 .addPackages(true, "com.github.zelmothedragon.whiteapp")
                 .merge(
                         webapp,

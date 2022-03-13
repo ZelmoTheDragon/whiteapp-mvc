@@ -8,64 +8,73 @@
     
     <groupId>com.github.zelmothedragon</groupId>
     <artifactId>whiteapp-mvc</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>whiteapp-mvc</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>11</version.java>
-        <version.javaee>8.0</version.javaee>
-        <version.primefaces>8.0</version.primefaces>
-        <version.eclipselink>2.7.6</version.eclipselink>
+        <version.primefaces>11.0.0</version.primefaces>
         
-        <!-- Serveur embarqué -->
-        <version.payara-micro-maven-plugin>1.0.7</version.payara-micro-maven-plugin>
-        <version.payara>5.201</version.payara>
+        <!-- Serveur -->
+        <version.payara>5.2022.1</version.payara>
+        <version.eclipselink>2.7.9.payara-p1</version.eclipselink>
+        <version.payara-micro-maven-plugin>1.4.0</version.payara-micro-maven-plugin>
         
         <!-- Version des extensions -->
-        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
-        <version.maven-dependency-plugin>3.1.2</version.maven-dependency-plugin>
-        <version.maven-war-plugin>3.2.3</version.maven-war-plugin>
-        <version.maven-dependency-plugin>3.1.2</version.maven-dependency-plugin>
+        <version.maven-compiler-plugin>3.10.1</version.maven-compiler-plugin>
+        <version.maven-dependency-plugin>3.3.0</version.maven-dependency-plugin>
+        <version.maven-war-plugin>3.3.2</version.maven-war-plugin>
+        <version.maven-dependency-plugin>3.3.0</version.maven-dependency-plugin>
         <version.maven-install-plugin>2.5.2</version.maven-install-plugin>
         <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
         <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
         <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
-        <version.maven-site-plugin>3.9.0</version.maven-site-plugin>
+        <version.maven-site-plugin>3.11.0</version.maven-site-plugin>
         <version.maven-clean-plugin>3.1.0</version.maven-clean-plugin>
-        <version.maven-resources-plugin>3.1.0</version.maven-resources-plugin>
+        <version.maven-resources-plugin>3.2.0</version.maven-resources-plugin>
         
         <!-- 
             TEST 
         -->
         <!-- Version des bibliothèques -->
-        <version.junit>4.13</version.junit>
-        <version.jacoco>0.8.5</version.jacoco>
-        
+        <version.jacoco>0.8.7</version.jacoco>
         <version.arquillian-bom>1.6.0.Final</version.arquillian-bom>
         <version.arquillian-junit-container>1.6.0.Final</version.arquillian-junit-container>
-        <version.graphene-webdriver>2.3.2</version.graphene-webdriver>
-        <version.arquillian-drone-bom>2.5.1</version.arquillian-drone-bom>
+        <version.graphene-webdriver>2.5.4</version.graphene-webdriver>
+        <version.arquillian-drone-bom>2.5.5</version.arquillian-drone-bom>
         <version.arquillian-warp-jsf>1.0.0</version.arquillian-warp-jsf>
         <version.arquillian-jacoco>1.1.0</version.arquillian-jacoco>
         <version.arquillian-jacoco-with-asm>1.1.0</version.arquillian-jacoco-with-asm>
-        <version.arquillian-payara-micro-managed>2.2</version.arquillian-payara-micro-managed>
         <version.shrinkwrap.resolver>3.1.4</version.shrinkwrap.resolver>
                
+        <webdriver.browser>phantomjs</webdriver.browser>
         <jacoco.agent.path>${project.build.directory}/org.jacoco.agent-${version.jacoco}.jar</jacoco.agent.path>
-        <jacoco.option>-javaagent:${jacoco.agent.path}=destfile=${project.build.directory}/jacoco/jacoco-it.exec</jacoco.option>
+        <jacoco.option>-javaagent:${jacoco.agent.path}=destfile=${project.build.directory}/jacoco/jacoco.exec</jacoco.option>
                         
     </properties>
     
+    <dependencyManagement>
+        <dependencies>
+            <!-- Payara API -->
+            <dependency>
+                <groupId>fish.payara.api</groupId>
+                <artifactId>payara-bom</artifactId>
+                <version>${version.payara}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <dependencies>
+        
         <dependency>
-            <!-- Java EE -->
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>${version.javaee}</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
             <scope>provided</scope>
-        </dependency>
+        </dependency>    
         <dependency>
             <!-- Bibliothèque graphique -->
             <groupId>org.primefaces</groupId>
@@ -73,23 +82,14 @@
             <version>${version.primefaces}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <!-- Générateur du méta modèle JPA -->
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>${version.eclipselink}</version>
-            <scope>provided</scope>
-        </dependency>
         
         <!-- 
             TEST 
         -->
         <!-- JUnit -->
         <dependency>
-            <!-- TODO: Migrer version JUnit 5 -->
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
         <!-- Jacoco -->
@@ -173,17 +173,16 @@
             <version>${version.shrinkwrap.resolver}</version>
             <scope>test</scope>
         </dependency>    
+        
         <!-- Payara -->
         <dependency>
             <groupId>fish.payara.arquillian</groupId>
             <artifactId>arquillian-payara-micro-managed</artifactId>
-            <version>${version.arquillian-payara-micro-managed}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>fish.payara.extras</groupId>
             <artifactId>payara-micro</artifactId>
-            <version>${version.payara}</version>
             <scope>test</scope>
         </dependency>
         
@@ -286,21 +285,14 @@
                     <target>${version.java}</target>
                     <showDeprecation>true</showDeprecation>
                     <!-- JPA meta modèle -->
-                    <annotationProcessors>
-                        <annotationProcessor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</annotationProcessor>
-                    </annotationProcessors>
-                    <compilerArguments>
-                        <AaddGeneratedAnnotation>true</AaddGeneratedAnnotation>
-                        <Adebug>true</Adebug>
-                    </compilerArguments>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.eclipse.persistence</groupId>
+                            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+                            <version>${version.eclipselink}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.eclipse.persistence</groupId>
-                        <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-                        <version>${version.eclipselink}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -383,4 +375,29 @@
 
         </plugins>
     </build>
+    
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>payara-patched-externals</id>
+            <name>Payara Patched Externals</name>
+            <url>https://raw.github.com/payara/Payara_PatchedProjects/master</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>payara-nexus-artifacts</id>
+            <url>https://nexus.payara.fish/repository/payara-artifacts</url>
+        </repository>
+    </repositories>
+    
 </project>

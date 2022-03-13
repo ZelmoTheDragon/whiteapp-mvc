@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
  *
  * @author MOSELLE Maxime
  */
-@Location("customer.xhtml")
+@Location("index.xhtml")
 public class IndexPage {
 
     @FindBy(id = "go")

@@ -34,13 +34,14 @@ L’architecture logicielle mise en place est **MVC** *(Model View Controller)*.
 ## Environnement
 
 Ce projet est réalisé en **Java 11** *(OpenJDK)*, **JavaEE 8** et **Payara 5.201**.
-Il utilise l'outil **Maven** en version 3.6.2.
+Il utilise l'outil **Maven** en version 3.8.4.
 
 ### Exécution
 
 Récupération du projet:
 ~~~
     git clone https://github.com/ZelmoTheDragon/whiteapp-mvc.git
+    cd whiteapp-mvc
     mvn install
 ~~~
 
@@ -52,7 +53,7 @@ Exécution du projet:
 OU
 
 ~~~
-    java -jar target/whiteapp-micro-X.Y.Z.jar
+    java -jar target/whiteapp-X.Y.Z-micro.jar
 ~~~
 
 > Où `X.Y.Z` désigne le numéro de version du projet.
