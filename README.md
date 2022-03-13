@@ -33,7 +33,7 @@ L’architecture logicielle mise en place est **MVC** *(Model View Controller)*.
 
 ## Environnement
 
-Ce projet est réalisé en **Java 11** *(OpenJDK)*, **JavaEE 8** et **Payara 5.201**.
+Ce projet est réalisé en **Java 11** *(OpenJDK)*, **JavaEE 8** et **Payara 5.2022.1**.
 Il utilise l'outil **Maven** en version 3.8.4.
 
 ### Exécution
